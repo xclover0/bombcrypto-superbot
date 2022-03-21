@@ -114,12 +114,13 @@ export class TreasureMapBot {
                 const detail = await this.client.coinDetail();
 
                 const message =
-                    "Rewards:\n" +
-                    `Mined: ${detail.mined} | Invested: ${detail.invested} ` +
-                    `| Rewards: ${detail.rewards}\n` +
+                    "— Rewards —\n" +
                     rewards
                         .map((reward) => `${reward.type}: ${reward.value}`)
-                        .join("\n");
+                        .join("\n") +
+                    `\nMined: ${detail.mined.toFixed(2)} | Invested: ${
+                        detail.invested
+                    } | Reward: ${(detail.rewards * 100).toFixed()}%\n`;
 
                 await context.reply(message);
             } else {
@@ -128,7 +129,7 @@ export class TreasureMapBot {
         } else if (command === "stats") {
             const message =
                 `Working heroes: ${this.workingSelection.length}\n` +
-                `Map: ${this.map.toString()}\n` +
+                `${this.map.toString()}\n` +
                 `IDX: ${this.index}`;
 
             await context.reply(message);
