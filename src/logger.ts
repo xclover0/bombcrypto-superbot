@@ -7,6 +7,9 @@ const formatter = winston.format.printf(({ level, message, timestamp }) => {
 
 export const logger = winston.createLogger({
     level: askAndParseEnv("DEBUG", parseBoolean, false) ? "debug" : "info",
-    format: winston.format.combine(winston.format.timestamp(), formatter),
+    format: winston.format.combine(
+        winston.format.timestamp({ format: "MM/DD/YYYY hh:mm:ss A" }),
+        formatter
+    ),
     transports: [new winston.transports.Console()],
 });
